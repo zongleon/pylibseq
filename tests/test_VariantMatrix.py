@@ -1,5 +1,5 @@
 import unittest
-import libsequence
+import pylibseq
 import numpy as np
 
 
@@ -16,7 +16,7 @@ def is_singleton(x):
 class RemoveNonRefSingletons(object):
     def __init__(self):
         # Treat 0 as the reference state
-        self.__c = libsequence.StateCounts(0)
+        self.__c = pylibseq.StateCounts(0)
 
     def __call__(self, x):
         self.__c(x)
@@ -32,7 +32,7 @@ class testVariantMatrix(unittest.TestCase):
     def setUp(self):
         self.data = [0, 1, 1, 0, 0, 0, 0, 1]
         self.pos = [0.1, 0.2]
-        self.m = libsequence.VariantMatrix(self.data, self.pos)
+        self.m = pylibseq.VariantMatrix(self.data, self.pos)
 
     def testConstruct(self):
         self.assertTrue(np.array_equal(self.m.data, np.array(
@@ -48,7 +48,7 @@ class testVariantMatrix(unittest.TestCase):
 
     def testFilterSites(self):
         self.assertEqual(self.m.nsites, 2)
-        libsequence.filter_sites(
+        pylibseq.filter_sites(
             self.m, is_singleton)
         self.assertEqual(self.m.nsites, 1)
 
@@ -67,7 +67,7 @@ class testColumnViews(unittest.TestCase):
     def setUp(self):
         self.data = [0, 1, 1, 0, 0, 0, 0, 1]
         self.pos = [0.1, 0.2]
-        self.m = libsequence.VariantMatrix(self.data, self.pos)
+        self.m = pylibseq.VariantMatrix(self.data, self.pos)
 
     def testIterateColumns(self):
         for i in range(self.m.nsites):
@@ -93,7 +93,7 @@ class testCreationFromNumpy(unittest.TestCase):
         self.d = np.array([0, 1, 1, 0, 0, 0, 0, 1],
                           dtype=np.int8).reshape((2, 4))
         self.pos = np.array([0.1, 0.2])
-        self.m = libsequence.VariantMatrix(self.d, self.pos)
+        self.m = pylibseq.VariantMatrix(self.d, self.pos)
 
     def testConstruct(self):
         self.assertTrue(self.m.data.flags.writeable is False)
@@ -120,20 +120,20 @@ class testCreationFromNumpy(unittest.TestCase):
             self.assertTrue(np.array_equal(s, self.d[:, i]))
 
     def testFilterSites(self):
-        libsequence.filter_sites(self.m, is_singleton)
+        pylibseq.filter_sites(self.m, is_singleton)
         self.assertEqual(self.m.nsites, 1)
 
     def testFilterSites2(self):
-        rv = libsequence.filter_sites(self.m, RemoveNonRefSingletons())
+        rv = pylibseq.filter_sites(self.m, RemoveNonRefSingletons())
         self.assertEqual(rv, 1)
 
     def testFilterSites3(self):
-        m2 = libsequence.VariantMatrix(self.m.data, self.m.positions)
-        rv = libsequence.filter_sites(m2, RemoveNonRefSingletons())
+        m2 = pylibseq.VariantMatrix(self.m.data, self.m.positions)
+        rv = pylibseq.filter_sites(m2, RemoveNonRefSingletons())
         self.assertEqual(rv, 1)
 
     def testCountStates(self):
-        c = libsequence.StateCounts()
+        c = pylibseq.StateCounts()
         try:
             for i in range(self.m.nsites):
                 c(self.m.site(i))
@@ -153,7 +153,7 @@ class testDataFromMsprime(unittest.TestCase):
                 ts = msprime.simulate(10, mutation_rate=10, random_seed=666)
                 gm = ts.genotype_matrix()
                 pos = np.array([i.position for i in ts.sites()])
-                m = libsequence.VariantMatrix(gm, pos)
+                m = pylibseq.VariantMatrix(gm, pos)
                 # If the data conversion is correct, the row and
                 # column sums must match
                 ma = np.array(m, copy=False)

@@ -11,4 +11,3 @@ pybind11_add_module(_libsequence MODULE src/_libsequence.cc
     ${CPP_SOURCES}
     ${LIBSEQ_SOURCES})
 
-# target_link_libraries(_libsequence PRIVATE sequence)

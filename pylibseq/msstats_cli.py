@@ -1,10 +1,10 @@
 # Python replacement for the C++ version of msstats.
 from __future__ import print_function
 import argparse
-import libsequence
-import libsequence.polytable as pt
-import libsequence.summstats as sstats
-import libsequence.citations as citations
+import pylibseq
+import pylibseq.polytable as pt
+import pylibseq.summstats as sstats
+import pylibseq.citations as citations
 import sqlite3
 import collections
 import pandas as pd
@@ -16,7 +16,7 @@ def make_parser():
 
     parser.add_argument(
         "-V", "--version", action='version',
-        version='%(prog)s {}'.format(libsequence.__version__))
+        version='%(prog)s {}'.format(pylibseq.__version__))
     parser.add_argument(
         "-v", "--verbose", action='store_true', help="Verbose output.  Extra info printed to standard error stream.")
 

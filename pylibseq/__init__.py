@@ -1,5 +1,3 @@
-__version__='0.2.3'
-
 from ._libsequence import *
 
 def get_includes():
@@ -7,8 +5,8 @@ def get_includes():
     Returns absolute path to location of libsequence headers
     """
     import os
-    import libsequence
-    return os.path.dirname(libsequence.__file__)+'/src/libsequence'
+    import pylibseq
+    return os.path.dirname(pylibseq.__file__)+'/src/libsequence'
 
 class Windows:
     """

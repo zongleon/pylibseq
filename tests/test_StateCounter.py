@@ -1,5 +1,5 @@
 import unittest
-from libsequence import StateCounter
+from pylibseq import StateCounter
 
 class test_StateCounter(unittest.TestCase):
     @classmethod

@@ -1,5 +1,5 @@
-[submodule "libsequence/src/libsequence"]
-	path = libsequence/src/libsequence
+[submodule "pylibseq/src/libsequence"]
+	path = pylibseq/src/libsequence
 	url = https://www.github.com/molpopgen/libsequence
 [submodule "pybind11"]
 	path = pybind11

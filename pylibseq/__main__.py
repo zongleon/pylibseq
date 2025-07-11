@@ -3,7 +3,7 @@ import sys
 
 
 def print_includes():
-    from libsequence import get_includes
+    from pylibseq import get_includes
 
     idirs = [get_includes()]
 
@@ -11,7 +11,7 @@ def print_includes():
 
 
 def get_includes():
-    from libsequence import get_includes
+    from pylibseq import get_includes
     print(get_includes())
 
 

@@ -1,4 +1,4 @@
-from libsequence.polytable import SimData
+from pylibseq.polytable import SimData
 
 
 def make_SimData(g):

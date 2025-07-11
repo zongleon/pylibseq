@@ -1,20 +1,20 @@
 import unittest
 import msprime
 import numpy as np
-import libsequence
+import pylibseq
 
 
 class testAlleleCountMatrix(unittest.TestCase):
     @classmethod
     def setUp(self):
         self.ts = msprime.simulate(10, mutation_rate=10, random_seed=42)
-        self.vm = libsequence.VariantMatrix.from_TreeSequence(
+        self.vm = pylibseq.VariantMatrix.from_TreeSequence(
             self.ts)
-        self.ac = libsequence.AlleleCountMatrix(self.vm)
+        self.ac = pylibseq.AlleleCountMatrix(self.vm)
 
     def testSubset(self):
         w = self.vm.window(0.25, 0.3)
-        acw = libsequence.AlleleCountMatrix(w)
+        acw = pylibseq.AlleleCountMatrix(w)
 
         pa = np.array(self.vm.positions)
         p = np.where((pa >= 0.25) & (pa <= 0.3))[0]
@@ -30,7 +30,7 @@ class testAlleleCountMatrix(unittest.TestCase):
         for i, j in zip(indexes, range(len(indexes))):
             row_i = self.ac.row(i)
             row_j = acw.row(j)
-            self.assertTrue(all(k == l for k, l in zip(row_i, row_j)) is True)
+            self.assertIs(all(k == l for k, l in zip(row_i, row_j)) is True)
 
     def testMerge(self):
         merged = self.ac._merge(self.ac)
@@ -42,7 +42,7 @@ class testAlleleCountMatrix(unittest.TestCase):
                 self.assertEqual(j, k)
 
     def testFromTreeSequence(self):
-        ac = libsequence.AlleleCountMatrix.from_tskit(self.ts)
+        ac = pylibseq.AlleleCountMatrix.from_tskit(self.ts)
         self.assertTrue(np.array_equal(np.array(ac), np.array(self.ac)))
 
 
