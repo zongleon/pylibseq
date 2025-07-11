@@ -30,7 +30,7 @@ class testAlleleCountMatrix(unittest.TestCase):
         for i, j in zip(indexes, range(len(indexes))):
             row_i = self.ac.row(i)
             row_j = acw.row(j)
-            self.assertIs(all(k == l for k, l in zip(row_i, row_j)) is True)
+            self.assertTrue(all(k == l for k, l in zip(row_i, row_j)))
 
     def testMerge(self):
         merged = self.ac._merge(self.ac)
