@@ -38,3 +38,5 @@ Documentation = "https://package.readthedocs.io/"
 Discussions = "https://github.com/organization/package/discussions"
 Changelog = "https://package.readthedocs.io/en/latest/changelog.html"
 
+[tool.scikit-build]
+cmake.args = ["-DCMAKE_CXX_FLAGS=-std=c++11"]
