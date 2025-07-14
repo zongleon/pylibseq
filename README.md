@@ -30,10 +30,11 @@ What this package does **not** (currently) do:
 
 ## Installing
 
-Clone this repository. Then, install the package with:
+Clone this repository. Then, get the submodules and install the package with:
 
 ```sh
 cd pylibseq
+git submodule update --init
 pip install .
 ```
 
@@ -48,10 +49,10 @@ conda -c bioconda install pylibseq
 Verify your installation works with:
 
 ```python
-import pylibseq # CHANGED! was 'import libsequence'
+import pylibseq as libsequence # CHANGED! was 'import libsequence'
 
-data = pylibseq.SimData(x)
-f = pylibseq.Fst(self.d,[2,2])
+data = libsequence.SimData(x)
+f = libsequence.Fst(self.d,[2,2])
 print(f)
 ```
 
@@ -89,7 +90,7 @@ If you use this software for your research, please cite:
 ## Requirements:
 
 -   python 3
--   a modern c++ compiler
+-   c++ compiler
 -   cmake \>= 3.18
 
 ## Changelog (rough)
