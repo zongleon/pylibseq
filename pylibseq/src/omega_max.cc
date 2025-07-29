@@ -64,7 +64,7 @@ omega_max(const SimData& data)
                     double denominator
                         = (1. / (double(l * (S - l)))) * sumrsqLR;
                     double omega = numerator / denominator;
-                    if (finite(omega) && omega > omega_max)
+                    if (isfinite(omega) && omega > omega_max)
                         {
                             omega_max = omega;
                             snp = position;
