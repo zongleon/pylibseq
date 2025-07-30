@@ -1,6 +1,9 @@
 name: Build
 
-on: [push, pull_request]
+on: 
+  push: 
+  pull_request:
+  workflow_dispatch:  # Manual trigger for releases
 
 jobs:
   build_wheels:
@@ -18,13 +21,6 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.1.2
-        # env:
-        #   CIBW_SOME_OPTION: value
-        #   ...
-        # with:
-        #   package-dir: .
-        #   output-dir: wheelhouse
-        #   config-file: "{package}/pyproject.toml"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -37,7 +33,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        submodules: recursive  # Optional, use if you have submodules
+        submodules: recursive
 
     - name: Build SDist
       run: pipx run build --sdist
@@ -46,4 +42,19 @@ jobs:
       with:
         name: cibw-sdist
         path: dist/*.tar.gz
-        
+
+  upload_all:
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'release' # Only run on manual trigger or release
+    needs: [build_wheels, make_sdist]
+    environment: pypi
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: cibw-*
+        path: dist
+        merge-multiple: true
+
+    - uses: pypa/gh-action-pypi-publish@release/v1
